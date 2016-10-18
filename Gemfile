@@ -46,6 +46,9 @@ group :test do
   # Factory Girl and Ffaker generates test data
   gem "factory_girl_rails"
   gem 'ffaker'
+
+  # Improvind the specs
+  gem 'shoulda-matchers'
 end
 group :production do
   # Use PostgreSQL in production
