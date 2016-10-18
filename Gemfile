@@ -36,5 +36,17 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
+group :test do
+  # use RSpec to create Test Cases
+  gem "rspec-rails"
+  # Factory Girl and Ffaker generates test data
+  gem "factory_girl_rails"
+  gem 'ffaker'
+end
+group :production do
+  # Use PostgreSQL in production
+  gem 'pg'
+end
+
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin, :x64_mingw, :jruby]
