@@ -4,15 +4,15 @@ include Requests::JsonHelpers
 
 describe Api::V1::UsersController, :type => :controller do
   before(:each) { request.headers['Accept'] = "application/vnd.localhost.v1" }
+  let(:user) { FactoryGirl.create :user }
 
   describe "GET #show" do
     before(:each) do
-      @user = FactoryGirl.create :user
-      get :show, id: @user.id, format: :json
+      get :show, id: user.id, format: :json
     end
 
     it "returns the information about a reporter on a hash" do
-      expect(json[:email]).to eql @user.email
+      expect(json[:email]).to eql user.email
     end
 
     it { should respond_with 200 }
@@ -54,9 +54,8 @@ describe Api::V1::UsersController, :type => :controller do
 
     context "when user is successfully updated" do
       before :each do
-        @user = FactoryGirl.create :user
         patch :update, {
-          id: @user.id, user: { email: "mail@example.org" } }, format: :json
+          id: user.id, user: { email: "mail@example.org" } }, format: :json
       end
 
       it "renders the updated user as json" do
@@ -68,16 +67,31 @@ describe Api::V1::UsersController, :type => :controller do
 
     context "when user is not updated" do
       before :each do
-        @user = FactoryGirl.create :user
         patch :update, {
-          id: @user.id, user: { email: "wrongemail.org" } }, format: :json
+          id: user.id, user: { email: "wrongemail.org" } }, format: :json
       end
 
       it "renders updating errors as json" do
         expect(json[:errors][:email]).to include "is invalid"
       end
-      
+
       it { should respond_with 422 }
+    end
+  end
+
+  describe "DELETE #destroy" do
+    context "when user is successfully deleted" do
+      it "responds with successful delete" do
+        delete :destroy, { id: user.id }, format: :json
+        should respond_with 204
+      end
+    end
+
+    context "when user is not deleted" do
+      it "responds with user not found for wrong user" do
+        delete :destroy, { id: "asdf" }, format: :json
+        should respond_with 404
+      end
     end
   end
 end

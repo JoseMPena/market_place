@@ -24,6 +24,15 @@ class Api::V1::UsersController < ApplicationController
     end
   end
 
+  def destroy
+    if User.exists?(params[:id])
+      User.destroy(params[:id])
+      head 204
+    else
+      head 404
+    end
+  end
+
   private
 
   def user_params
