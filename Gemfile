@@ -31,6 +31,13 @@ group :development, :test do
   gem 'byebug', platform: :mri
   # Use sqlite3 as the database for Active Record
   gem 'sqlite3'
+  # use RSpec to create Test Cases
+  gem "rspec-rails"
+  # Factory Girl and Ffaker generates test data
+  gem "factory_girl_rails"
+  gem 'ffaker'
+  # Improvind the specs
+  gem 'shoulda-matchers'
 end
 
 group :development do
@@ -40,16 +47,6 @@ group :development do
   gem 'spring-watcher-listen', '~> 2.0.0'
 end
 
-group :test do
-  # use RSpec to create Test Cases
-  gem "rspec-rails"
-  # Factory Girl and Ffaker generates test data
-  gem "factory_girl_rails"
-  gem 'ffaker'
-
-  # Improvind the specs
-  gem 'shoulda-matchers'
-end
 group :production do
   # Use PostgreSQL in production
   gem 'pg'
