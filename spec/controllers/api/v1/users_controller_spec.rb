@@ -49,4 +49,35 @@ describe Api::V1::UsersController, :type => :controller do
       it { should respond_with 422 }
     end
   end
+
+  describe "PUT/PATCH #update" do
+
+    context "when user is successfully updated" do
+      before :each do
+        @user = FactoryGirl.create :user
+        patch :update, {
+          id: @user.id, user: { email: "mail@example.org" } }, format: :json
+      end
+
+      it "renders the updated user as json" do
+        expect(json[:email]).to eql("mail@example.org")
+      end
+
+      it { should respond_with 200}
+    end
+
+    context "when user is not updated" do
+      before :each do
+        @user = FactoryGirl.create :user
+        patch :update, {
+          id: @user.id, user: { email: "wrongemail.org" } }, format: :json
+      end
+
+      it "renders updating errors as json" do
+        expect(json[:errors][:email]).to include "is invalid"
+      end
+      
+      it { should respond_with 422 }
+    end
+  end
 end
