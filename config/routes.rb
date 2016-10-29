@@ -1,6 +1,5 @@
+require 'api_constraints'
 Rails.application.routes.draw do
-  require 'api_constraints'
-  devise_for :users
 
   namespace :api,
   defaults: { format: :json }, constraints: { subdomain: 'api' }, path: '/' do
@@ -8,6 +7,7 @@ Rails.application.routes.draw do
       constraints: ApiConstraints.new(version: 1, default: true) do
         resources :users, only: [:show]
     end
+    devise_for :users
   end
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
 end

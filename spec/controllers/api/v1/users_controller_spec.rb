@@ -1,6 +1,6 @@
 require 'rails_helper'
 
-RSpec.describe Api::V1::UsersController, type: :controller do
+cd
   before(:each) {
     request.headers['Accept'] = "application/vnd.localhost:3000"
   }
