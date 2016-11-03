@@ -3,12 +3,12 @@ require 'rails_helper'
 include Requests::JsonHelpers
 
 describe Api::V1::UsersController, :type => :controller do
-  before(:each) { request.headers['Accept'] = "application/vnd.localhost.v1" }
+  before(:each) { request.headers['Accept'] = "application/vnd.localhost.v1, #{Mime::JSON}" }
   let(:user) { FactoryGirl.create :user }
 
   describe "GET #show" do
     before(:each) do
-      get :show, id: user.id, format: :json
+      get :show, id: user.id
     end
 
     it "returns the information about a reporter on a hash" do
@@ -23,7 +23,7 @@ describe Api::V1::UsersController, :type => :controller do
     context "when user is successfully created" do
       before :each do
         @user_attributes = FactoryGirl.attributes_for :user
-        post :create, { user: @user_attributes }, format: :json
+        post :create, { user: @user_attributes }
       end
 
       it "renders the created user as json" do
@@ -39,7 +39,7 @@ describe Api::V1::UsersController, :type => :controller do
           password: "123456",
           password_confirmation: "123456"
         }
-        post :create, { user: @invalid_user_attributes }, format: :json
+        post :create, { user: @invalid_user_attributes }
       end
 
       it "renders an error as json" do
@@ -55,7 +55,7 @@ describe Api::V1::UsersController, :type => :controller do
     context "when user is successfully updated" do
       before :each do
         patch :update, {
-          id: user.id, user: { email: "mail@example.org" } }, format: :json
+          id: user.id, user: { email: "mail@example.org" } }
       end
 
       it "renders the updated user as json" do
@@ -68,7 +68,7 @@ describe Api::V1::UsersController, :type => :controller do
     context "when user is not updated" do
       before :each do
         patch :update, {
-          id: user.id, user: { email: "wrongemail.org" } }, format: :json
+          id: user.id, user: { email: "wrongemail.org" } }
       end
 
       it "renders updating errors as json" do
@@ -82,14 +82,14 @@ describe Api::V1::UsersController, :type => :controller do
   describe "DELETE #destroy" do
     context "when user is successfully deleted" do
       it "responds with successful delete" do
-        delete :destroy, { id: user.id }, format: :json
+        delete :destroy, { id: user.id }
         should respond_with 204
       end
     end
 
     context "when user is not deleted" do
       it "responds with user not found for wrong user" do
-        delete :destroy, { id: "asdf" }, format: :json
+        delete :destroy, { id: "asdf" }
         should respond_with 404
       end
     end
