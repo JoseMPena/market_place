@@ -5,6 +5,6 @@ var Body = React.createClass({
         <NewUser/>
         <Users/>
       </div>
-    )
+    );
   }
 });
