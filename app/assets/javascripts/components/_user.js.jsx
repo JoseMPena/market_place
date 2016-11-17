@@ -4,7 +4,7 @@ var Users = React.createClass({
   },
 
   componentDidMount() {
-    $.getJSON('/api/v1/users.json', (response) => {
+    $.getJSON('users', (response) => {
       this.setState({users: response});
     });
 

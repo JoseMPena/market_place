@@ -3,7 +3,7 @@ var NewUser = React.createClass({
     var name = this.refs.name.value;
     var email = this.refs.email.value;
     $.ajax({
-      url: '/api/v1/users',
+      url: 'users',
       type: 'POST',
       data: {
         user: {

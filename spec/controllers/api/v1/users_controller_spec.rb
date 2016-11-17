@@ -27,7 +27,6 @@ describe Api::V1::UsersController, :type => :controller do
       end
 
       it "renders the created user as json" do
-        byebug
         expect(json[:email]).to eql(@user_attributes[:email])
       end
       it { should respond_with 201}
