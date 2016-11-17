@@ -1,3 +1,4 @@
+require 'pry'
 class Api::V1::UsersController < Api::V1::BaseController
 
   def index
@@ -39,6 +40,11 @@ class Api::V1::UsersController < Api::V1::BaseController
   private
 
   def user_params
-    params.require(:user).permit(:id, :name, :email)
+    params.require(:user).permit( :id, 
+                                  :name, 
+                                  :email, 
+                                  :password, 
+                                  :password_confirmation
+                                )
   end
 end

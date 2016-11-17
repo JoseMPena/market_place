@@ -1,5 +1,6 @@
 require 'spec_helper'
 require 'rails_helper'
+require 'pry'
 include Requests::JsonHelpers
 
 describe Api::V1::UsersController, :type => :controller do
