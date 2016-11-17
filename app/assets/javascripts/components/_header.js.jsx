@@ -1,9 +1,8 @@
-var App = React.createClass({
+var Header = React.createClass({
   render() {
     return (
       <div>
-        <Header/>
-        <Body/>
+        <h1>Header!</h1>
       </div>
     )
   }

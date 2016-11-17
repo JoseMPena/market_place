@@ -1,30 +1,44 @@
 class Api::V1::UsersController < Api::V1::BaseController
-    before_action :set_user, only: [:destroy, :update]
-    
+
   def index
     respond_with User.all
   end
 
-  def create
-    respond_with :api, :v1, User.create(user_params)
+  def show
+    respond_with User.find(params[:id])
   end
 
-  def destroy
-    respond_with User.destroy(p@user)
+  def create
+    user = User.new(user_params)
+    if user.save
+      render json: user, status: 201, location: [:api, user]
+    else
+      render json: { errors: user.errors }, status: 422
+    end
   end
 
   def update
-    @user.update_attributes(user_params)
-    respond_with @user, json: @user
+    user = User.find(params[:id])
+
+    if user.update(user_params)
+      render json: user, status: 200, location: [:api, user]
+    else
+      render json: { errors: user.errors }, status: 422
+    end
+  end
+
+  def destroy
+    if User.exists?(params[:id])
+      User.destroy(params[:id])
+      head 204
+    else
+      head 404
+    end
   end
 
   private
 
   def user_params
     params.require(:user).permit(:id, :name, :description)
-  end
-  
-  def set_user
-    @user = User.find(params[:id])
   end
 end

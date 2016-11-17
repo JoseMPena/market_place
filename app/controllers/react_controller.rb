@@ -1,4 +1,4 @@
 class ReactController < ApplicationController
-  def index
+  def start
   end
 end
